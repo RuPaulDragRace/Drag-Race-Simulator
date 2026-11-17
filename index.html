@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#120c09">
+  <meta name="description" content="SIMUVERSE; Explore The Crown, The Island, and The Top Model simulators.">
+  <title>SIMUVERSE</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-glow" aria-hidden="true"></div>
+  <div class="site-shell" id="top">
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="SIMUVERSE home">
+        <span class="brand-symbol" aria-hidden="true">S</span>
+        <span class="brand-name">SIMUVERSE</span>
+      </a>
+      <nav class="nav-actions" aria-label="External links">
+        <a class="pill pill--outline" href="https://discord.gg/U6E6BJ2hsV" target="_blank" rel="noopener noreferrer">DISCORD <span aria-hidden="true">↗</span></a>
+        <a class="pill pill--lime" href="https://forms.gle/TvVrg3ENdn3gE9Cg6" target="_blank" rel="noopener noreferrer">SUGGESTIONS <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <h1 id="heroTitle">SIMU<span>VERSE</span><i>.</i></h1>
+          <p>Choose The Simulator</p>
+        </div>
+        <div class="hero-orbit" aria-hidden="true">
+          <span class="orbit orbit--one"></span>
+          <span class="orbit orbit--two"></span>
+          <span class="orbit orbit--three"></span>
+          <span class="orbit-dot orbit-dot--one"></span>
+          <span class="orbit-dot orbit-dot--two"></span>
+          <span class="orbit-center">✳</span>
+          <span class="orbit-star orbit-star--one">✦</span>
+          <span class="orbit-star orbit-star--two">✧</span>
+        </div>
+      </section>
+
+      <section class="simulators" aria-label="Choose a simulator">
+        <button class="sim-card sim-card--crown" type="button" data-simulator="crown" aria-haspopup="dialog" aria-controls="simulatorDialog" aria-label="Explore The Crown">
+          <span class="card-pattern" aria-hidden="true"><span class="pattern-ring"></span><span class="pattern-sparkle">✦</span><span class="pattern-dot"></span></span>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+          <span class="card-content">
+            <span class="card-title">THE CROWN</span>
+            <span class="card-description">All your drag simulators in one place.</span>
+            <span class="card-action">EXPLORE <span aria-hidden="true">↗</span></span>
+          </span>
+        </button>
+
+        <button class="sim-card sim-card--island" type="button" data-simulator="island" aria-haspopup="dialog" aria-controls="simulatorDialog" aria-label="Explore The Island">
+          <span class="card-pattern" aria-hidden="true"><span class="pattern-ring"></span><span class="pattern-sparkle">✳</span><span class="pattern-dot"></span></span>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+          <span class="card-content">
+            <span class="card-title">THE ISLAND</span>
+            <span class="card-description">Challenges, alliances, and chaos.</span>
+            <span class="card-action">EXPLORE <span aria-hidden="true">↗</span></span>
+          </span>
+        </button>
+
+        <button class="sim-card sim-card--model" type="button" data-simulator="model" aria-haspopup="dialog" aria-controls="simulatorDialog" aria-label="Explore The Top Model">
+          <span class="card-pattern" aria-hidden="true"><span class="pattern-ring"></span><span class="pattern-sparkle">✧</span><span class="pattern-dot"></span></span>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+          <span class="card-content">
+            <span class="card-title">THE TOP MODEL</span>
+            <span class="card-description">Photoshoots, runways, and fierce judging.</span>
+            <span class="card-action">EXPLORE <span aria-hidden="true">↗</span></span>
+          </span>
+        </button>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="sim-dialog" id="simulatorDialog" aria-labelledby="dialogTitle" aria-describedby="dialogDescription">
+    <button class="dialog-close" id="dialogClose" type="button" aria-label="Close simulator details">×</button>
+    <div class="dialog-layout">
+      <div class="dialog-art" aria-hidden="true">
+        <span class="dialog-ring"></span>
+        <span class="dialog-art-sparkle">✦</span>
+        <img id="dialogPreview" class="dialog-preview" alt="" hidden>
+      </div>
+      <div class="dialog-copy">
+        <h2 id="dialogTitle">THE CROWN</h2>
+        <p id="dialogDescription"></p>
+        <a id="dialogStart" class="pill pill--lime dialog-start" href="drag_race/index.html">START SIMULATOR <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    (() => {
+      const simulators = {
+        crown: {
+          title: 'THE CROWN', route: 'drag_race/index.html', image: 'logos/drag_race_2.png',
+          description: 'All your drag simulators in one place; from Drag Race and All Stars to Call Me Mother, Big Mother, and more. Create your cast, shape the rules, and play out every twist.'
+        },
+        island: {
+          title: 'THE ISLAND', route: 'tdi/index.html', image: 'logos/tdi_2.png',
+          description: 'Campers battle through chaotic challenges, unlikely alliances, rivalries, and unexpected eliminations. See who makes it all the way to the end.'
+        },
+        model: {
+          title: 'THE TOP MODEL', route: 'top_model/index.html', image: 'logos/top_model_2.png',
+          description: 'Aspiring models compete in high-fashion photoshoots, runway challenges, makeovers, and judging to become the next top model.'
+        }
+      };
+
+      const dialog = document.getElementById('simulatorDialog');
+      const dialogTitle = document.getElementById('dialogTitle');
+      const dialogDescription = document.getElementById('dialogDescription');
+      const dialogPreview = document.getElementById('dialogPreview');
+      const dialogStart = document.getElementById('dialogStart');
+      let opener = null;
+      let previewRequest = 0;
+
+      document.querySelectorAll('.sim-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const simulator = simulators[card.dataset.simulator];
+          opener = card;
+          dialog.dataset.simulator = card.dataset.simulator;
+          dialogTitle.textContent = simulator.title;
+          dialogDescription.textContent = simulator.description;
+          dialogStart.href = simulator.route;
+
+          const request = ++previewRequest;
+          dialogPreview.hidden = true;
+          dialogPreview.removeAttribute('src');
+          const probe = new Image();
+          probe.onload = () => {
+            if (request !== previewRequest) return;
+            dialogPreview.src = simulator.image;
+            dialogPreview.hidden = false;
+          };
+          probe.onerror = () => { if (request === previewRequest) dialogPreview.hidden = true; };
+          probe.src = simulator.image;
+
+          dialog.showModal();
+        });
+      });
+
+      document.getElementById('dialogClose').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', event => {
+        if (event.target === dialog) dialog.close();
+      });
+      dialog.addEventListener('close', () => { previewRequest++; opener?.focus(); });
+    })();
+  </script>
+</body>
+</html>
